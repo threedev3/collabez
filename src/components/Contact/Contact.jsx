@@ -4,6 +4,7 @@ import personTable from "../../assets/img/tablePerson.png";
 import { useGSAP } from "@gsap/react"; // Import useGSAP from @gsap/react
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import backgroundImage from "../../assets/img/contactbg.png";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
@@ -11,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 function Contact({ portfolioRef, featuresRef, contactRef, homeRef }) {
   const headContact = useRef(null);
   const textContact = useRef(null);
+  const formRef = useRef(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -42,20 +44,36 @@ function Contact({ portfolioRef, featuresRef, contactRef, homeRef }) {
         scrub: true,
         // markers: true,
       },
-    }).from(textContact.current, {
-      duration: 0.5,
-      opacity: 0,
-      y: -300,
-      ease: "power1.out",
-      scrollTrigger: {
-        trigger: textContact.current,
-        start: "top 70%",
-        end: "top 30%",
-        toggleActions: "play none none none",
-        scrub: true,
-        // markers: true,
-      },
-    });
+    })
+      .from(textContact.current, {
+        duration: 0.5,
+        opacity: 0,
+        y: -300,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: textContact.current,
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none none",
+          scrub: true,
+          // markers: true,
+        },
+      })
+      .from(formRef.current, {
+        duration: 0.5,
+        y: 100,
+        opacity: 0,
+        ease: "power1.out",
+        stagger: 0.5,
+        scrollTrigger: {
+          trigger: formRef.current,
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none none",
+          scrub: true,
+          // markers: true,
+        },
+      });
   });
 
   return (
@@ -89,6 +107,7 @@ function Contact({ portfolioRef, featuresRef, contactRef, homeRef }) {
         <form
           className="lg:flex lg:flex-col lg:gap-10 flex flex-col gap-6 mt-10 max-w-full"
           onSubmit={handleSubmit}
+          ref={formRef}
         >
           <div className="lg:flex lg:flex-row lg:justify-between lg:gap-4 flex flex-col gap-4 max-w-full">
             <div className="flex flex-col gap-3 w-full">

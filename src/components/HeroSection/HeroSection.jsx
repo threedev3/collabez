@@ -20,7 +20,7 @@ const navigation = [
   { name: "Contact", href: "#" },
 ];
 
-export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
+export default function HeroSection({ portfolioRef, featuresRef, contactRef, homeRef }) {
   // const gsapInstance = useGSAP(gsap); // Initialize GSAP useGSAP hook with gsap instance
   const mainContainer = useRef(null);
   const menuToggle = useRef(null);
@@ -36,6 +36,9 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
   const viewBtn = useRef(null);
   const headerRef = useRef(null);
   const circleRef = useRef(null);
+  const roundRef1 = useRef(null);
+  const roundRef2 = useRef(null);
+  const viewText = useRef(null);
 
   const sections = {
     Home: mainContainer,
@@ -243,7 +246,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
         ease: "power1.out",
         scrollTrigger: {
           trigger: introHead.current,
-          start: "top 80%",
+          start: "top 70%",
           toggleActions: "play none none none",
           scrub: true,
         },
@@ -302,33 +305,72 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
     document.body.style.overflow = ""; // Restore scrolling
   };
 
+  let animationRef = null;
+
   const animateViewEnter = contextSafe(() => {
     gsap.to(viewAnimate.current, {
       x: 50,
       duration: 1,
+      color: "#ffffff"
     });
+
+    animationRef = gsap
+      .timeline()
+      .to(roundRef2.current, {
+        x: 20,
+        duration: 0
+      })
+      .to(viewText.current, {
+        color: "#ffffff",
+        duration: 0.3,
+      })
+      .to([roundRef1.current, roundRef2.current], {
+        rotationY: 360,
+        duration: 1.3,
+        ease: "linear",
+        // repeat: -1,
+        // yoyo: true,
+        transformOrigin: "center center",
+      })
+      .to(
+        [roundRef1.current, roundRef2.current],
+        {
+          background: "linear-gradient(55deg, #FFAE00 0%, #ffc549 50%, #ff9f00 100%)",
+          duration: 0.5,
+          ease: "power1.out",
+        },
+        0
+      );
   });
   const animateViewLeave = contextSafe(() => {
     gsap.to(viewAnimate.current, {
       x: 0,
       duration: 1,
     });
+    gsap.to(roundRef2.current, {
+      x: 0,
+      duration: 0.5
+    });
+    gsap.to(viewText.current, {
+      color: "#D9D9D9",
+      duration: 0.3,
+    })
+
+    if (animationRef) {
+      animationRef.kill();
+      gsap.to([roundRef1.current, roundRef2.current], {
+        rotationY: 0,
+        background: "transparent",
+        duration: 1,
+        ease: "power1.out",
+      });
+    }
   });
 
   const text = "Branding Creative Design Logo";
   const textArray = text.split("");
 
   const chars = headingRef.current;
-
-  // useGSAP(() => {
-  //   gsap.from(chars, {
-  //     duration: 0.6,
-  //     y: 50,
-  //     opacity: 0,
-  //     ease: "power3.out",
-  //     stagger: 0.05,
-  //   });
-  // });
 
   const splitText = (text) => {
     return text.split("").map((char, index) => (
@@ -361,9 +403,9 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
               className="flex items-center justify-between py-8"
               aria-label="Global"
             >
-              <div className="flex lg:flex-1" ref={headerRef}>
-                <a href="#" className="-m-1.5 p-1.5">
-                  <img className="h-12 w-auto" src={Logo} alt="" />
+              <div className="flex lg:flex-1 cursor-pointer z-20" ref={headerRef}>
+                <a href="#" className="-m-1.5 p-1.5 h-20 w-auto " onClick={() => handleNavClick("Home")}>
+                  <img className="object-cover" src={Logo} alt="" />
                 </a>
               </div>
               <div className="flex">
@@ -461,7 +503,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
                   <span className="inline-block">Experiences</span>
                 </p>
               </div>
-              <div className="relative flex items-center justify-center md:pt-16">
+              <div className="relative flex items-center justify-center md:pt-4">
                 <img
                   src={starImg}
                   alt="Star"
@@ -492,7 +534,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
               </div>
             </div>
 
-            <div className="relative w-full lg:flex lg:justify-center hidden">
+            {/* <div className="relative w-full lg:flex lg:justify-center hidden">
               <div className="h-20 w-10 p-1 bg-switchBg rounded-full">
                 <div className="border-2 border-borderColor h-full w-full rounded-full flex justify-center">
                   <div
@@ -501,7 +543,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
                   ></div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="w-full h-[10px] bg-heroColor"></div>
         </div>
@@ -527,14 +569,27 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef }) {
               onClick={() => handleNavClick("Portfolio")}
               ref={viewBtn}
             >
-              <img src={ellipseImg} alt="" />
               <div
-                className="absolute left-2 flex justify-start gap-6 w-full"
+                className="relative"
+                onMouseEnter={animateViewEnter}
+                onMouseLeave={animateViewLeave}
+              >
+                <div
+                  className="w-20 h-20 border-2 border-borderColor rounded-full"
+                  ref={roundRef1}
+                />
+                <div
+                  className="w-20 h-20 border-2 border-borderColor rounded-full absolute top-0 left-0"
+                  ref={roundRef2}
+                />
+              </div>
+              <div
+                className="absolute left-6 flex justify-start gap-6 w-full"
                 ref={viewAnimate}
                 onMouseEnter={animateViewEnter}
                 onMouseLeave={animateViewLeave}
               >
-                <p className="text-viewProj text-xs">View All Projects</p>
+                <p className="text-viewProj text-xs" ref={viewText}>View All Projects</p>
                 <img src={arrowImg} alt="" className="" />
               </div>
             </div>

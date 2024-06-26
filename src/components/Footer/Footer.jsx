@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import footerLogo from "../../assets/img/footerlogo.png";
+import { useGSAP } from "@gsap/react"; // Import useGSAP from @gsap/react
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 function Footer({ portfolioRef, featuresRef, contactRef, homeRef }) {
   const currentYear = new Date().getFullYear();
+  const footerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(footerRef.current, {
+      y: 100,
+      duration: 2,
+      stagger: 0.5,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: "top 100%",
+        end: "top 90%",
+        toggleActions: "play none none none",
+        scrub: true,
+        // markers: true,
+      },
+    });
+  });
 
   const navigation = [
     { name: "Home", href: "#" },
@@ -27,12 +51,10 @@ function Footer({ portfolioRef, featuresRef, contactRef, homeRef }) {
         behavior: "smooth",
       });
     }
-
   };
 
   return (
     <div className="pt-16 max-w-full relative shadow-inner ">
-        
       <div className="md:grid md:grid-cols-3 md:gap-6 grid grid-cols-1 gap-6 max-w-[1400px] mx-auto pb-24">
         <div className="">
           <img src={footerLogo} alt="" className="" />
@@ -40,11 +62,16 @@ function Footer({ portfolioRef, featuresRef, contactRef, homeRef }) {
 
         <div className="md:flex md:justify-center md:items-center text-white">
           <ul className="leading-8">
-            {
-              navigation.map((item, index) => (
-                <a className="block" onClick={() => {handleNavClick(item.name)}}>{item.name}</a>
-              ))
-            }
+            {navigation.map((item, index) => (
+              <a
+                className="block"
+                onClick={() => {
+                  handleNavClick(item.name);
+                }}
+              >
+                {item.name}
+              </a>
+            ))}
           </ul>
         </div>
 

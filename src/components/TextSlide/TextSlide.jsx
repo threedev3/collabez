@@ -32,7 +32,7 @@ function TextSlide({ portfolioRef, featuresRef, contactRef, homeRef }) {
 
   return (
     <div className="bg-wholeBg lg:pt-8 pt-8 max-w-full shadow-xl relative ">
-      <div className="max-w-[1400px] lg:pb-16 mx-auto relative z-40">
+      <div className="max-w-[1400px] lg:pb-16 pb-12 mx-auto relative z-40">
         <div className="flex flex-col">
           <div className="text-marqueeText lg:text-[100px] sm:text-7xl text-5xl ">
             <marquee

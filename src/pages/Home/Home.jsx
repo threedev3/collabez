@@ -15,6 +15,7 @@ function Home() {
   return (
     <div ref={homeRef}>
       <HeroSection
+        ref={homeRef}
         portfolioRef={portfolioRef}
         featuresRef={featuresRef}
         contactRef={contactRef}

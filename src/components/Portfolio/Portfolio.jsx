@@ -78,9 +78,9 @@ function Portfolio() {
       img: projectImg,
     },
     {
-      title: "Eman Time",
-      tags: ["ReactJS", "Tailwind CSS", ],
-      img: projectImg2,
+      title: "Tuition Highway",
+      tags: ["ReactJS", "NodeJS", "ExpressJS", "MongoDB" ],
+      img: projectImg,
     },
   ];
 
