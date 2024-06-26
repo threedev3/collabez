@@ -4,33 +4,43 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
+        poppins: ["Poppins", "sans-serif"],
       },
       colors: {
-        whiteColor: '#FFFFFF',
-        menuIcon: '#A4A4A4',
-        heroColor: '#FFAE00',
-        introColor: '#F2F2F2',
-        wholeBg: '#222222',
-        viewProj: '#D9D9D9',
-        borderColor: '#494949',
-        portBorder: '#2C2C2C',
-        marqueeText: "#818181"
+        whiteColor: "#FFFFFF",
+        menuIcon: "#A4A4A4",
+        heroColor: "#FFAE00",
+        introColor: "#F2F2F2",
+        wholeBg: "#222222",
+        viewProj: "#D9D9D9",
+        borderColor: "#494949",
+        portBorder: "#2C2C2C",
+        marqueeText: "#818181",
+        switchBg: "#403E3E"
       },
       backgroundSize: {
-        'auto': 'auto',
-        'cover': 'cover',
-        'contain': 'contain',
-        '100%' : '100%',
-        '38%': '38%',
-        '30%': '30%',
-        '16': '4rem',
+        auto: "auto",
+        cover: "cover",
+        contain: "contain",
+        "100%": "100%",
+        "38%": "38%",
+        "30%": "30%",
+        16: "4rem",
       },
       backgroundPosition: {
-        'moveup' : '0 -133px',
-        'moveupfooter' : '0 -533px',
+        moveup: "0 -133px",
+        moveupfooter: "0 -533px",
       },
-     
+      keyframes: {
+        spinSlow: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
+
+      animation: {
+        "spinSlow": "spinSlow 10s linear infinite",
+      },
     },
   },
   plugins: [],

@@ -1,8 +1,34 @@
 import React from "react";
 import footerLogo from "../../assets/img/footerlogo.png";
 
-function Footer() {
+function Footer({ portfolioRef, featuresRef, contactRef, homeRef }) {
   const currentYear = new Date().getFullYear();
+
+  const navigation = [
+    { name: "Home", href: "#" },
+    { name: "Portfolio", href: "#" },
+    { name: "Features", href: "#" },
+    { name: "Contact", href: "#" },
+  ];
+
+  const sections = {
+    Home: homeRef,
+    Portfolio: portfolioRef,
+    Features: featuresRef,
+    Contact: contactRef,
+  };
+
+  const handleNavClick = (section) => {
+    const targetRef = sections[section];
+
+    if (targetRef && targetRef.current) {
+      window.scrollTo({
+        top: targetRef.current.offsetTop,
+        behavior: "smooth",
+      });
+    }
+
+  };
 
   return (
     <div className="pt-16 max-w-full relative shadow-inner ">
@@ -14,11 +40,11 @@ function Footer() {
 
         <div className="md:flex md:justify-center md:items-center text-white">
           <ul className="leading-8">
-            <li>Home</li>
-            <li>About</li>
-            <li>Case Studies</li>
-            <li>Blog</li>
-            <li>Contact</li>
+            {
+              navigation.map((item, index) => (
+                <a className="block" onClick={() => {handleNavClick(item.name)}}>{item.name}</a>
+              ))
+            }
           </ul>
         </div>
 

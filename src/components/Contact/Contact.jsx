@@ -1,15 +1,65 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Footer from "../Footer/Footer";
-import personTable from '../../assets/img/tablePerson.png'
+import personTable from "../../assets/img/tablePerson.png";
+import { useGSAP } from "@gsap/react"; // Import useGSAP from @gsap/react
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function Contact() {
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
+
+function Contact({ portfolioRef, featuresRef, contactRef, homeRef }) {
+  const headContact = useRef(null);
+  const textContact = useRef(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setFirstName("");
+    setLastName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+  };
+
+  const ContactText = gsap.timeline({ paused: true });
+
+  useGSAP(() => {
+    ContactText.from(headContact.current, {
+      duration: 0.5,
+      opacity: 0,
+      y: -100,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: headContact.current,
+        start: "top 70%",
+        end: "top 30%",
+        toggleActions: "play none none none",
+        scrub: true,
+        // markers: true,
+      },
+    }).from(textContact.current, {
+      duration: 0.5,
+      opacity: 0,
+      y: -300,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: textContact.current,
+        start: "top 70%",
+        end: "top 30%",
+        toggleActions: "play none none none",
+        scrub: true,
+        // markers: true,
+      },
+    });
+  });
+
   return (
-    <div className="bg-wholeBg bg-[url('/src/assets/img/contactbg.png')] bg-no-repeat bg-cover xl:bg-moveupfooter bg-moveup max-w-full relative  overflow-hidden lg:pt-16 lg:px-8 px-4 pt-8">
-
-      
-        
-
-
+    <div className="bg-wholeBg bg-[url('/src/assets/img/contactbg.png')] bg-no-repeat bg-cover xl:bg-moveupfooter bg-moveupfooter max-w-full relative drop-shadow-2xl overflow-hidden lg:pt-16 lg:px-8 px-4 pt-8">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-0 w-[450px] h-[450px]">
           <div
@@ -17,23 +67,29 @@ function Contact() {
             style={{
               background:
                 "radial-gradient(circle at bottom left, #fce077, transparent 60%)",
-              opacity: '0.7'
+              opacity: "0.7",
             }}
           />
         </div>
       </div>
       <div className="max-w-[1400px] mx-auto relative z-50">
         <div className="flex flex-col gap-3 max-w-2xl ">
-          <h3 className="lg:text-6xl md:text-5xl text-4xl text-white font-bold">
+          <h3
+            className="lg:text-6xl md:text-5xl text-4xl text-white font-bold"
+            ref={headContact}
+          >
             Contact <span className="text-heroColor">CollabEz</span>
           </h3>
-          <p className="text-white md:text-xl text-base">
+          <p className="text-white md:text-xl text-base" ref={textContact}>
             We always try to implement our creative ideas at the highest level.
             Tell us about your project and we will make it work.
           </p>
         </div>
 
-        <form className="lg:flex lg:flex-col lg:gap-10 flex flex-col gap-6 mt-10 max-w-full">
+        <form
+          className="lg:flex lg:flex-col lg:gap-10 flex flex-col gap-6 mt-10 max-w-full"
+          onSubmit={handleSubmit}
+        >
           <div className="lg:flex lg:flex-row lg:justify-between lg:gap-4 flex flex-col gap-4 max-w-full">
             <div className="flex flex-col gap-3 w-full">
               <label htmlFor="" className="text-white">
@@ -42,8 +98,10 @@ function Contact() {
               <input
                 required
                 type="text"
-                className="p-3 rounded-lg bg-transparent border-2 border-heroColor"
+                className="p-3 rounded-lg bg-transparent border-2 border-heroColor text-white"
                 placeholder="Your First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-3 w-full">
@@ -53,21 +111,25 @@ function Contact() {
               <input
                 required
                 type="text"
-                className="p-3 rounded-lg bg-transparent border-2 border-heroColor"
+                className="p-3 rounded-lg bg-transparent border-2 border-heroColor text-white"
                 placeholder="Your Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
           </div>
-          <div className="lg:flex lg:flex-row lg:justify-between lg:gap-4 flex flex-col gap-4 max-w-full">
+          <div className="lg:flex lg:flex-row lg:justify-between lg:gap-4 flex flex-col gap-4 max-w-full text-white">
             <div className="flex flex-col gap-3 w-full">
               <label htmlFor="" className="text-white">
                 Phone
               </label>
               <input
                 required
-                type="text"
-                className="p-3 rounded-lg bg-transparent border-2 border-heroColor"
+                type="number"
+                className="p-3 rounded-lg bg-transparent border-2 border-heroColor text-white remove-arrow"
                 placeholder="+11 8282 xxx"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-3 w-full">
@@ -76,9 +138,11 @@ function Contact() {
               </label>
               <input
                 required
-                type="text"
-                className="p-3 rounded-lg bg-transparent border-2 border-heroColor"
+                type="email"
+                className="p-3 rounded-lg bg-transparent border-2 border-heroColor text-white"
                 placeholder="email@domain.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -91,8 +155,10 @@ function Contact() {
                 required
                 rows={10}
                 type="text"
-                className="p-3 rounded-lg bg-transparent border-2 border-heroColor"
+                className="p-3 rounded-lg bg-transparent border-2 border-heroColor text-white"
                 placeholder="Your Message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -121,7 +187,12 @@ function Contact() {
         </form>
       </div>
 
-      <Footer />
+      <Footer
+        portfolioRef={portfolioRef}
+        featuresRef={featuresRef}
+        contactRef={contactRef}
+        homeRef={homeRef}
+      />
     </div>
   );
 }

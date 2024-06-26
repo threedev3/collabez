@@ -1,12 +1,69 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import personImg from "../../assets/img/person.png";
 import logoIcon from "../../assets/img/logoIcon.png";
 import appIcon from "../../assets/img/appIcon.png";
 import webIcon from "../../assets/img/webIcon.png";
 import marketingIcon from "../../assets/img/marketingIcon.png";
 import FeatureCard from "../FeatureCard/FeatureCard";
+import { useGSAP } from "@gsap/react"; // Import useGSAP from @gsap/react
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 function Features() {
+  const imageRef = useRef(null);
+  const headRef = useRef(null);
+  const textRef = useRef(null);
+
+  const featureText = gsap.timeline({ paused: true });
+
+  useGSAP(() => {
+    featureText
+      .from(headRef.current, {
+        duration: 0.5,
+        opacity: 0,
+        y: -100,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: headRef.current,
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none none",
+          scrub: true,
+          // markers: true,
+        },
+      })
+      .from(textRef.current, {
+        duration: 0.5,
+        opacity: 0,
+        y: -300,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: textRef.current,
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none none",
+          scrub: true,
+          // markers: true,
+        },
+      })
+
+      .from(imageRef.current, {
+        duration: 0.5,
+        opacity: 0,
+        y: 100,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top 70%",
+          toggleActions: "play none none none",
+          scrub: true,
+        },
+      });
+  });
+
   const features = [
     {
       title: "Logo Design & Branding",
@@ -39,16 +96,16 @@ function Features() {
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col gap-5">
           <div className="lg:flex lg:flex-row lg:justify-between lg:items-center">
-            <div className="flex flex-col gap-3">
-              <h3 className="text-white lg:text-6xl text-4xl font-bold">
+            <div className="flex flex-col gap-3" >
+              <p className="text-white lg:text-6xl text-4xl font-bold" ref={headRef}>
                 Why CollabEz ?
-              </h3>
-              <p className="text-introColor text-xl">
+              </p>
+              <p className="text-introColor text-xl" ref={textRef}>
                 We never faill to deliver desired result with E4!!{" "}
               </p>
             </div>
             <div className="lg:block flex justify-end">
-              <img src={personImg} alt="" />
+              <img src={personImg} alt="" ref={imageRef} />
             </div>
           </div>
 

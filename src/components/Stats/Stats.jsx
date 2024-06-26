@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Stats() {
   const stats = [
@@ -20,14 +24,64 @@ function Stats() {
     },
   ];
 
+  const statRefs = useRef([]);
+  statRefs.current = [];
+
+  const addToRefs = (el) => {
+    if (el && !statRefs.current.includes(el)) {
+      statRefs.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    statRefs.current.forEach((el, index) => {
+      gsap.fromTo(
+        el,
+        { innerText: 0,
+          opacity: 0,
+          // y: -50,
+          // duration: 1
+         },
+        {
+          innerText: stats[index].count,
+          duration: 0.5,
+          opacity: 1,
+          // y:0,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            end: "top 50%",
+            toggleActions: "play none none none",
+            // markers: true,
+            scrub: true
+          },
+          snap: { innerText: 1 },
+          stagger: 0.2,
+          onUpdate: function () {
+            el.innerText = `${Math.ceil(el.innerText)}+`;
+          },
+        }
+      );
+    });
+  }, [stats]);
+
   return (
     <div className="bg-wholeBg lg:py-12 lg:px-8 px-4 py-8 max-w-full border-t-2 border-t-borderColor border-b-2 border-b-borderColor">
       <div className="max-w-[1400px] mx-auto">
         <div className="max-w-full lg:flex lg:flex-row lg:justify-between flex flex-row justify-center flex-wrap ">
           {stats.map((stat, index) => (
-            <div key={index} className="flex flex-col gap-7 p-5 text-center min-w-[250px]">
+            <div
+              key={index}
+              className="flex flex-col gap-7 p-5 text-center min-w-[250px]"
+            >
               <h3 className="text-white lg:text-3xl text-3xl">{stat.title}</h3>
-              <p className="text-heroColor lg:text-6xl text-6xl font-bold">{stat.count}</p>
+              <p
+                className="text-heroColor lg:text-6xl text-6xl font-bold"
+                ref={addToRefs}
+              >
+                0+
+              </p>
             </div>
           ))}
         </div>
