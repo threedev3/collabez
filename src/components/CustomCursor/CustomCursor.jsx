@@ -32,11 +32,11 @@ function CustomCursor() {
   return (
     <>
       <div
-        className="w-4 h-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full pointer-events-none fixed transform -translate-x-1/2 -translate-y-1/2 z-50 shadow-lg animate-pulse"
+        className="w-4 h-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full pointer-events-none fixed transform -translate-x-1/2 -translate-y-1/2 z-50 shadow-lg animate-pulse lg:block hidden"
         ref={cursorRef}
       ></div>
       <div
-        className="w-10 h-10 border-4 border-heroColor rounded-full pointer-events-none fixed transform -translate-x-1/2 -translate-y-1/2 z-40 opacity-75"
+        className="w-10 h-10 border-4 border-heroColor rounded-full pointer-events-none fixed transform -translate-x-1/2 -translate-y-1/2 z-40 opacity-75 lg:block hidden"
         ref={cursorFollowerRef}
       ></div>
     </>

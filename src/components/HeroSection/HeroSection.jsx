@@ -400,7 +400,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef, hom
 
           <header className="absolute inset-x-0 top-0 max-w-[1400px] mx-auto pt-8 px-4">
             <nav
-              className="flex items-center justify-between py-8"
+              className="flex items-start justify-between py-8"
               aria-label="Global"
             >
               <div className="flex lg:flex-1 cursor-pointer z-20" ref={headerRef}>
@@ -479,8 +479,8 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef, hom
             </div>
           </header>
 
-          <div className="relative isolate px-4 pt-14 py-16  lg:px-8 max-w-full ">
-            <div className="max-w-[1400px] mx-auto px-3 pt-32 sm:pt-32 lg:pt-40 lg:flex lg:flex-row lg:justify-between">
+          <div className="relative isolate px-4 pt-14 py-8  lg:px-8 max-w-full ">
+            <div className="max-w-[1400px] mx-auto px-3 pt-32 sm:pt-32 lg:pt-32 lg:flex lg:flex-row lg:justify-between">
               <div>
                 <h1
                   className="text-4xl max-w-2xl font-bold tracking-tight text-white sm:text-6xl md:text-6xl xl:text-7xl"
@@ -503,7 +503,7 @@ export default function HeroSection({ portfolioRef, featuresRef, contactRef, hom
                   <span className="inline-block">Experiences</span>
                 </p>
               </div>
-              <div className="relative flex items-center justify-center md:pt-4">
+              <div className="relative flex items-center justify-center ">
                 <img
                   src={starImg}
                   alt="Star"
